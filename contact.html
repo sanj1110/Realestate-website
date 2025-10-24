@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Elite Property Consultancy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-grey: #2c3e50;
+            --light-grey: #ecf0f1;
+            --light-red: #e74c3c;
+            --white: #ffffff;
+            --text-dark: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        header {
+            background: var(--white);
+            color: var(--primary-grey);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light-red);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--primary-grey);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--light-red);
+        }
+
+        .contact-sidebar {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--light-red);
+            color: var(--white);
+            padding: 1.5rem 1rem;
+            border-radius: 10px 0 0 10px;
+            z-index: 999;
+            box-shadow: -3px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .contact-sidebar h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--white);
+            padding-bottom: 0.5rem;
+        }
+
+        .contact-sidebar p {
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            word-break: break-word;
+        }
+
+        .contact-sidebar a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-grey) 0%, var(--text-dark) 100%);
+            color: var(--white);
+            padding: 120px 2rem 60px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-section {
+            padding: 80px 2rem;
+            background: var(--light-grey);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .contact-info h2 {
+            font-size: 2rem;
+            color: var(--primary-grey);
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--light-red);
+            padding-bottom: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: start;
+            margin-bottom: 2rem;
+            gap: 1.5rem;
+        }
+
+        .info-icon {
+            font-size: 2.5rem;
+            color: var(--light-red);
+            min-width: 50px;
+        }
+
+        .info-content h3 {
+            font-size: 1.3rem;
+            color: var(--primary-grey);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-content p {
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .info-content a {
+            color: var(--light-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .info-content a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--light-red);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--primary-grey);
+            transform: translateY(-5px);
+        }
+
+        .contact-form-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            color: var(--primary-grey);
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--light-red);
+            padding-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-grey);
+            font-size: 1.05rem;
+        }
+
+        .required {
+            color: var(--light-red);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid var(--light-grey);
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--light-red);
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--light-red);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-button:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .offices-section {
+            padding: 80px 2rem;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-grey);
+        }
+
+        .offices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .office-card {
+            background: var(--light-grey);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--light-red);
+        }
+
+        .office-card h3 {
+            font-size: 1.5rem;
+            color: var(--light-red);
+            margin-bottom: 1rem;
+        }
+
+        .office-card p {
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+        }
+
+        .map-section {
+            padding: 80px 2rem;
+            background: var(--light-grey);
+        }
+
+        .map-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 400px;
+            background: var(--light-grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            font-size: 3rem;
+            color: var(--light-red);
+        }
+
+        footer {
+            background: var(--primary-grey);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info,
+            .contact-form-container {
+                padding: 2rem;
+            }
+
+            .contact-sidebar {
+                position: static;
+                transform: none;
+                border-radius: 10px;
+                margin: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Elite Property Consultancy</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="approach.html">Our Approach</a></li>
+                    <li><a href="awards.html">Awards</a></li>
+                    <li><a href="booking.html">Book Consultancy</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="contact-sidebar">
+        <h3>Get in Touch</h3>
+        <p>📧 <a href="mailto:info@eliteproperty.com">info@eliteproperty.com</a></p>
+        <p>📞 <a href="tel:+919876543210">+91 98765 43210</a></p>
+    </div>
+
+    <section class="page-hero">
+        <h1>Contact Us</h1>
+        <p>We're here to help with all your property consultancy needs</p>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">📍</div>
+                        <div class="info-content">
+                            <h3>Head Office</h3>
+                            <p>Elite Property Consultancy<br>
+                            302, Business Tower, MG Road<br>
+                            Pune, Maharashtra 411001<br>
+                            India</p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">📧</div>
+                        <div class="info-content">
+                            <h3>Email Address</h3>
+                            <p><a href="mailto:info@eliteproperty.com">info@eliteproperty.com</a><br>
+                            <a href="mailto:support@eliteproperty.com">support@eliteproperty.com</a><br>
+                            <a href="mailto:careers@eliteproperty.com">careers@eliteproperty.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">📞</div>
+                        <div class="info-content">
+                            <h3>Phone Numbers</h3>
+                            <p>Main Line: <a href="tel:+919876543210">+91 98765 43210</a><br>
+                            Customer Care: <a href="tel:+919876543211">+91 98765 43211</a><br>
+                            WhatsApp: <a href="tel:+919876543212">+91 98765 43212</a></p>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">🕐</div>
+                        <div class="info-content">
+                            <h3>Working Hours</h3>
+                            <p>Monday - Friday: 9:00 AM - 7:00 PM<br>
+                            Saturday: 9:00 AM - 5:00 PM<br>
+                            Sunday: By Appointment Only</p>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook">📘</a>
+                        <a href="#" class="social-link" title="Twitter">🐦</a>
+                        <a href="#" class="social-link" title="LinkedIn">💼</a>
+                        <a href="#" class="social-link" title="Instagram">📷</a>
+                        <a href="#" class="social-link" title="YouTube">📺</a>
+                    </div>
+                </div>
+
+                <div class="contact-form-container">
+                    <h2 class="form-title">Send us a Message</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label>Full Name <span class="required">*</span></label>
+                            <input type="text" name="name" required placeholder="Enter your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <input type="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone Number <span class="required">*</span></label>
+                            <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Subject <span class="required">*</span></label>
+                            <select name="subject" required>
+                                <option value="">-- Select Subject --</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="service">Service Information</option>
+                                <option value="booking">Consultation Booking</option>
+                                <option value="complaint">Complaint/Feedback</option>
+                                <option value="partnership">Partnership Opportunity</option>
+                                <option value="career">Career Opportunities</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Your Message <span class="required">*</span></label>
+                            <textarea name="message" required placeholder="Please describe your inquiry in detail..."></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="offices-section">
+        <div class="container">
+            <h2 class="section-title">Our Office Locations</h2>
+            <div class="offices-grid">
+                <div class="office-card">
+                    <h3>Mumbai Office</h3>
+                    <p>📍 Tower B, Andheri Business Park<br>
+                    Andheri East, Mumbai 400069</p>
+                    <p>📞 <a href="tel:+912223456789" style="color: var(--light-red); text-decoration: none;">+91 22 2345 6789</a></p>
+                    <p>📧 <a href="mailto:mumbai@eliteproperty.com" style="color: var(--light-red); text-decoration: none;">mumbai@eliteproperty.com</a></p>
+                </div>
+
+                <div class="office-card">
+                    <h3>Bangalore Office</h3>
+                    <p>📍 5th Floor, Prestige Centre<br>
+                    Koramangala, Bangalore 560095</p>
+                    <p>📞 <a href="tel:+918023456789" style="color: var(--light-red); text-decoration: none;">+91 80 2345 6789</a></p>
+                    <p>📧 <a href="mailto:bangalore@eliteproperty.com" style="color: var(--light-red); text-decoration: none;">bangalore@eliteproperty.com</a></p>
+                </div>
+
+                <div class="office-card">
+                    <h3>Delhi Office</h3>
+                    <p>📍 Plot 15, Connaught Place<br>
+                    New Delhi 110001</p>
+                    <p>📞 <a href="tel:+911123456789" style="color: var(--light-red); text-decoration: none;">+91 11 2345 6789</a></p>
+                    <p>📧 <a href="mailto:delhi@eliteproperty.com" style="color: var(--light-red); text-decoration: none;">delhi@eliteproperty.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="map-section">
+        <div class="container">
+            <h2 class="section-title">Find Us on Map</h2>
+            <div class="map-container">
+                <div class="map-placeholder">
+                    🗺️
+                    <p style="margin-left: 1rem; font-size: 1.2rem; color: var(--text-dark);">Map Location</p>
+                </div>
+                <p style="margin-top: 1rem; color: var(--text-dark);">Head Office: 302, Business Tower, MG Road, Pune, Maharashtra 411001</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Elite Property Consultancy. All rights reserved.</p>
+        <p>Your Trusted Partner in Real Estate Excellence</p>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            alert('Thank you for contacting us! We have received your message and will respond within 24 hours.');
+            
+            // Reset form
+            this.reset();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Property Consultancy - Your Trusted Real Estate Partner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-grey: #2c3e50;
+            --light-grey: #ecf0f1;
+            --light-red: #e74c3c;
+            --white: #ffffff;
+            --text-dark: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--white);
+            color: var(--primary-grey);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light-red);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--primary-grey);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--light-red);
+        }
+
+        /* Contact Info Sidebar */
+        .contact-sidebar {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .contact-item {
+            background: var(--light-red);
+            color: var(--white);
+            padding: 1.2rem 0.8rem;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 5px 0 0 5px;
+            box-shadow: -3px 0 10px rgba(0,0,0,0.1);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .contact-item:hover {
+            background: #c0392b;
+            padding-right: 1.2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-grey) 0%, var(--text-dark) 100%);
+            color: var(--white);
+            padding: 150px 2rem 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .hero .highlight {
+            color: var(--light-red);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--light-red);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 2rem;
+            background: var(--light-grey);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-grey);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-left: 5px solid var(--light-red);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.2);
+        }
+
+        .service-card h3 {
+            color: var(--primary-grey);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--light-red);
+            margin-bottom: 1rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 2rem;
+            background: var(--white);
+        }
+
+        .testimonial-slider {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial {
+            display: none;
+            padding: 3rem;
+            background: var(--light-grey);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .testimonial.active {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .testimonial-photo {
+            flex-shrink: 0;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 5px solid var(--light-red);
+        }
+
+        .testimonial-content {
+            flex: 1;
+        }
+
+        .testimonial-content p {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--light-red);
+            font-size: 1.2rem;
+        }
+
+        .testimonial-role {
+            color: var(--primary-grey);
+            font-size: 1rem;
+            margin-top: 0.3rem;
+        }
+
+        .slider-navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .slider-arrow {
+            background: var(--light-red);
+            color: var(--white);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
+        }
+
+        .slider-arrow:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .slider-dots {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .dot {
+            height: 16px;
+            width: 16px;
+            background-color: var(--light-grey);
+            border: 3px solid var(--light-red);
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background-color: var(--light-red);
+            transform: scale(1.2);
+        }
+
+        .dot:hover {
+            transform: scale(1.1);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-grey);
+            color: var(--white);
+            padding: 3rem 2rem 1.5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-column h3 {
+            color: var(--light-red);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer-nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-nav a {
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+        .footer-nav a:hover {
+            color: var(--light-red);
+            padding-left: 5px;
+        }
+
+        .footer-column p {
+            color: var(--white);
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .footer-column p a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column p a:hover {
+            color: var(--light-red);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--light-red);
+            transform: translateY(-5px);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-sidebar {
+                position: static;
+                transform: none;
+                border-radius: 10px;
+                margin: 2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .social-links {
+                justify-content: center;
+            }
+
+            .testimonial.active {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .testimonial-photo {
+                width: 120px;
+                height: 120px;
+                font-size: 3.5rem;
+            }
+
+            .slider-arrow {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .slider-navigation {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">Elite Property Consultancy</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="approach.html">Our Approach</a></li>
+                    <li><a href="awards.html">Awards</a></li>
+                    <li><a href="booking.html">Book Consultancy</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Contact Sidebar -->
+    <div class="contact-sidebar">
+        <a href="mailto:info@eliteproperty.com" class="contact-item email">info@eliteproperty.com</a>
+        <a href="tel:+919876543210" class="contact-item phone">+91 98765 43210</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Your Trusted <span class="highlight">Real Estate Partner</span></h1>
+        <p>Expert consultancy services for all your property needs - from due diligence to rental management</p>
+        <a href="booking.html" class="cta-button">Book a Consultation</a>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Comprehensive real estate solutions tailored to your needs</p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h3>Due Diligence</h3>
+                    <p>Comprehensive property verification including title search, legal documentation review, encumbrance certificate checks, and complete risk assessment to ensure your investment is secure.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3>Builder Buyer Agreement Review</h3>
+                    <p>Expert legal analysis of agreements, identifying hidden clauses, unfavorable terms, and ensuring your rights are protected. We negotiate better terms on your behalf.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>Project Progress Checks</h3>
+                    <p>Regular on-site inspections and progress monitoring as per your demand. We verify construction quality, timeline adherence, and compliance with approved plans.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🏗️</div>
+                    <h3>Fitout Inspection</h3>
+                    <p>Detailed assessment of property fitouts, quality checks, defect identification, and snag list preparation. Ensure your property meets the highest standards before handover.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🎨</div>
+                    <h3>Interior Design & Engineering</h3>
+                    <p>Complete interior solutions from concept to execution. Our team provides innovative designs, 3D visualizations, and engineering services for residential and commercial spaces.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🏢</div>
+                    <h3>Rental Management</h3>
+                    <p>End-to-end rental property management including tenant screening, rent collection, maintenance coordination, legal compliance, and maximizing your rental income.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">What Our Clients Say</h2>
+            <p class="section-subtitle">Trusted by hundreds of satisfied clients</p>
+            
+            <div class="testimonial-slider">
+                <div class="testimonial active">
+                    <div class="testimonial-photo">👨</div>
+                    <div class="testimonial-content">
+                        <p>"Elite Property Consultancy helped us navigate a complex property purchase. Their due diligence service uncovered issues we would have never found. They saved us from a potentially disastrous investment!"</p>
+                        <div class="testimonial-author">Rajesh Kumar</div>
+                        <div class="testimonial-role">Property Investor, Mumbai</div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-photo">👩</div>
+                    <div class="testimonial-content">
+                        <p>"The team's attention to detail during our project progress checks was outstanding. They caught construction quality issues early, and the builder had to fix them. Worth every penny!"</p>
+                        <div class="testimonial-author">Priya Sharma</div>
+                        <div class="testimonial-role">Homeowner, Pune</div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-photo">👨</div>
+                    <div class="testimonial-content">
+                        <p>"Their rental management service is exceptional. I own three properties and they handle everything - from finding tenants to maintenance. My rental income has increased by 20%!"</p>
+                        <div class="testimonial-author">Amit Patel</div>
+                        <div class="testimonial-role">Real Estate Investor, Delhi</div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-photo">👩</div>
+                    <div class="testimonial-content">
+                        <p>"The interior design team transformed our apartment into a beautiful modern home. Their engineering expertise ensured everything was perfect. Highly professional and creative!"</p>
+                        <div class="testimonial-author">Sneha Reddy</div>
+                        <div class="testimonial-role">Homeowner, Bangalore</div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <div class="testimonial-photo">👨</div>
+                    <div class="testimonial-content">
+                        <p>"Their builder-buyer agreement review service identified several unfavorable clauses that could have cost us lakhs. They negotiated with the builder and got us much better terms!"</p>
+                        <div class="testimonial-author">Vikram Singh</div>
+                        <div class="testimonial-role">First-time Home Buyer, Hyderabad</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slider-navigation">
+                <button class="slider-arrow" onclick="changeSlide(-1)">‹</button>
+                <div class="slider-dots">
+                    <span class="dot active" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                </div>
+                <button class="slider-arrow" onclick="changeSlide(1)">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <nav class="footer-nav">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="approach.html">Our Approach</a></li>
+                            <li><a href="awards.html">Awards</a></li>
+                            <li><a href="booking.html">Book Consultancy</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <p>📧 <a href="mailto:info@eliteproperty.com">info@eliteproperty.com</a></p>
+                    <p>📞 <a href="tel:+919876543210">+91 98765 43210</a></p>
+                    <p>📍 302, Business Tower, MG Road<br>Pune, Maharashtra 411001</p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="Facebook">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="Twitter">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="Instagram">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" title="YouTube">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Elite Property Consultancy. All rights reserved.</p>
+                <p>Your Trusted Partner in Real Estate Excellence</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Testimonial Slider
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        // Auto slide every 5 seconds
+        setInterval(function() {
+            slideIndex++;
+            showSlides(slideIndex);
+        }, 5000);
+
+        function changeSlide(n) {
+            slideIndex += n;
+            showSlides(slideIndex);
+        }
+
+        function currentSlide(n) {
+            slideIndex = n;
+            showSlides(slideIndex);
+        }
+
+        function showSlides(n) {
+            let slides = document.getElementsByClassName("testimonial");
+            let dots = document.getElementsByClassName("dot");
+            
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].classList.remove("active");
+            }
+            
+            slides[slideIndex-1].classList.add("active");
+            dots[slideIndex-1].classList.add("active");
+        }
+    </script>
+</body>
+</html>

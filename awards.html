@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awards & Recognitions - Elite Property Consultancy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-grey: #2c3e50;
+            --light-grey: #ecf0f1;
+            --light-red: #e74c3c;
+            --white: #ffffff;
+            --text-dark: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        header {
+            background: var(--white);
+            color: var(--primary-grey);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light-red);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--primary-grey);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--light-red);
+        }
+
+        .contact-sidebar {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--light-red);
+            color: var(--white);
+            padding: 1.5rem 1rem;
+            border-radius: 10px 0 0 10px;
+            z-index: 999;
+            box-shadow: -3px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .contact-sidebar p {
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            word-break: break-word;
+        }
+
+        .contact-sidebar p:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-sidebar a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-grey) 0%, var(--text-dark) 100%);
+            color: var(--white);
+            padding: 120px 2rem 60px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-grey);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: var(--text-dark);
+        }
+
+        .awards-section {
+            padding: 80px 2rem;
+            background: var(--white);
+        }
+
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .award-card {
+            background: var(--light-grey);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+            border-top: 5px solid var(--light-red);
+        }
+
+        .award-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.2);
+        }
+
+        .award-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .award-year {
+            background: var(--light-red);
+            color: var(--white);
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .award-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-grey);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .award-issuer {
+            color: var(--light-red);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .award-card p {
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .certifications-section {
+            padding: 80px 2rem;
+            background: var(--light-grey);
+        }
+
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .cert-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid var(--light-red);
+        }
+
+        .cert-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--light-red);
+        }
+
+        .cert-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary-grey);
+            margin-bottom: 0.5rem;
+        }
+
+        .cert-card p {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .recognition-section {
+            padding: 80px 2rem;
+            background: var(--white);
+        }
+
+        .recognition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .recognition-card {
+            background: var(--light-grey);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .recognition-card h3 {
+            font-size: 1.4rem;
+            color: var(--light-red);
+            margin-bottom: 1rem;
+        }
+
+        .recognition-card p {
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+        }
+
+        .press-section {
+            padding: 80px 2rem;
+            background: var(--light-grey);
+        }
+
+        .press-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .press-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-bottom: 4px solid var(--light-red);
+        }
+
+        .press-logo {
+            font-size: 2.5rem;
+            color: var(--light-red);
+            margin-bottom: 1rem;
+        }
+
+        .press-card h3 {
+            font-size: 1.3rem;
+            color: var(--primary-grey);
+            margin-bottom: 0.5rem;
+        }
+
+        .press-source {
+            font-weight: 600;
+            color: var(--light-red);
+            margin-bottom: 0.8rem;
+        }
+
+        .press-date {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .press-card p {
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        footer {
+            background: var(--primary-grey);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .awards-grid, .cert-grid, .recognition-grid, .press-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-sidebar {
+                position: static;
+                transform: none;
+                border-radius: 10px;
+                margin: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Elite Property Consultancy</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="approach.html">Our Approach</a></li>
+                    <li><a href="awards.html">Awards</a></li>
+                    <li><a href="booking.html">Book Consultancy</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="contact-sidebar">
+        <p>📧 <a href="mailto:info@eliteproperty.com">info@eliteproperty.com</a></p>
+        <p>📞 <a href="tel:+919876543210">+91 98765 43210</a></p>
+    </div>
+
+    <section class="page-hero">
+        <h1>Awards & Recognitions</h1>
+        <p>Excellence acknowledged by industry leaders and satisfied clients</p>
+    </section>
+
+    <section class="awards-section">
+        <div class="container">
+            <h2 class="section-title">Industry Awards</h2>
+            <p class="section-subtitle">Recognized for outstanding service and innovation</p>
+            
+            <div class="awards-grid">
+                <div class="award-card">
+                    <div class="award-icon">🏆</div>
+                    <div class="award-year">2024</div>
+                    <h3>Best Real Estate Consultancy Firm of the Year</h3>
+                    <div class="award-issuer">India Property Awards</div>
+                    <p>Recognized for excellence in due diligence services and client satisfaction across residential and commercial segments.</p>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon">⭐</div>
+                    <div class="award-year">2023</div>
+                    <h3>Excellence in Client Service Award</h3>
+                    <div class="award-issuer">National Realty Excellence Awards</div>
+                    <p>Honored for maintaining 98% client satisfaction rate and innovative approach to property consultancy.</p>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon">🥇</div>
+                    <div class="award-year">2023</div>
+                    <h3>Innovation in Property Technology</h3>
+                    <div class="award-issuer">PropTech India Summit</div>
+                    <p>Awarded for implementing advanced digital tools for property inspection and documentation verification.</p>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon">🎖️</div>
+                    <div class="award-year">2022</div>
+                    <h3>Top 10 Property Advisory Firms</h3>
+                    <div class="award-issuer">Real Estate Business India</div>
+                    <p>Listed among the top consultancy firms for comprehensive due diligence and legal advisory services.</p>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon">💎</div>
+                    <div class="award-year">2022</div>
+                    <h3>Excellence in Interior Design Consultancy</h3>
+                    <div class="award-issuer">Design & Architecture Excellence Awards</div>
+                    <p>Recognized for outstanding residential and commercial interior design projects across multiple cities.</p>
+                </div>
+
+                <div class="award-card">
+                    <div class="award-icon">🌟</div>
+                    <div class="award-year">2021</div>
+                    <h3>Customer Choice Award</h3>
+                    <div class="award-issuer">PropertyGuru India</div>
+                    <p>Based on customer reviews and ratings, acknowledged as the preferred consultancy partner for homebuyers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="certifications-section">
+        <div class="container">
+            <h2 class="section-title">Professional Certifications</h2>
+            <p class="section-subtitle">Our team holds industry-recognized credentials</p>
+            
+            <div class="cert-grid">
+                <div class="cert-card">
+                    <div class="cert-icon">📜</div>
+                    <h3>RERA Certified Consultants</h3>
+                    <p>All consultants registered with Real Estate Regulatory Authority</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">⚖️</div>
+                    <h3>Legal & Compliance Experts</h3>
+                    <p>Team includes qualified lawyers and legal advisors</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">🏗️</div>
+                    <h3>Licensed Engineers</h3>
+                    <p>Civil engineers certified by Institution of Engineers India</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">🎨</div>
+                    <h3>Certified Interior Designers</h3>
+                    <p>Accredited by Council of Architecture</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">📊</div>
+                    <h3>Property Valuation Experts</h3>
+                    <p>Certified valuers with government recognition</p>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-icon">🔐</div>
+                    <h3>ISO 9001:2015 Certified</h3>
+                    <p>Quality management systems certification</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="recognition-section">
+        <div class="container">
+            <h2 class="section-title">Industry Recognition</h2>
+            <p class="section-subtitle">Featured and acknowledged by leading organizations</p>
+            
+            <div class="recognition-grid">
+                <div class="recognition-card">
+                    <h3>🏛️ CREDAI Member</h3>
+                    <p>Active member of Confederation of Real Estate Developers' Associations of India</p>
+                    <p>Participate in policy discussions and industry standardization initiatives</p>
+                </div>
+
+                <div class="recognition-card">
+                    <h3>🤝 NAREDCO Partner</h3>
+                    <p>National Real Estate Development Council recognized partner</p>
+                    <p>Collaborate on real estate reforms and consumer protection measures</p>
+                </div>
+
+                <div class="recognition-card">
+                    <h3>🎓 Academic Collaboration</h3>
+                    <p>Guest faculty at leading business schools for real estate programs</p>
+                    <p>Contribute to research on property law and market dynamics</p>
+                </div>
+
+                <div class="recognition-card">
+                    <h3>📺 Media Expert</h3>
+                    <p>Regular contributor to leading business news channels</p>
+                    <p>Quoted in major publications on property market trends</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="press-section">
+        <div class="container">
+            <h2 class="section-title">Press & Media Coverage</h2>
+            <p class="section-subtitle">Featured in leading publications</p>
+            
+            <div class="press-grid">
+                <div class="press-card">
+                    <div class="press-logo">📰</div>
+                    <h3>"Setting New Standards in Property Due Diligence"</h3>
+                    <div class="press-source">The Economic Times</div>
+                    <div class="press-date">September 2024</div>
+                    <p>Elite Property Consultancy's innovative approach to due diligence is helping homebuyers make informed decisions and avoid costly mistakes.</p>
+                </div>
+
+                <div class="press-card">
+                    <div class="press-logo">📱</div>
+                    <h3>"Top 5 PropTech Innovators to Watch"</h3>
+                    <div class="press-source">Business Today</div>
+                    <div class="press-date">July 2024</div>
+                    <p>Featured for leveraging technology to transform traditional property consultancy services and enhance client experience.</p>
+                </div>
+
+                <div class="press-card">
+                    <div class="press-logo">🏠</div>
+                    <h3>"Expert Opinion: Protecting Your Property Investment"</h3>
+                    <div class="press-source">Housing.com</div>
+                    <div class="press-date">March 2024</div>
+                    <p>Our CEO shares insights on essential due diligence steps every homebuyer should take before making a purchase decision.</p>
+                </div>
+
+                <div class="press-card">
+                    <div class="press-logo">💼</div>
+                    <h3>"Building Trust in Real Estate Transactions"</h3>
+                    <div class="press-source">Forbes India</div>
+                    <div class="press-date">January 2024</div>
+                    <p>Profile on how Elite Property Consultancy is bringing transparency and professionalism to the property advisory sector.</p>
+                </div>
+
+                <div class="press-card">
+                    <div class="press-logo">📊</div>
+                    <h3>"Market Analysis: Post-RERA Property Consultancy Boom"</h3>
+                    <div class="press-source">Money Control</div>
+                    <div class="press-date">November 2023</div>
+                    <p>Case study on our rapid growth and the increasing demand for professional property consultancy services.</p>
+                </div>
+
+                <div class="press-card">
+                    <div class="press-logo">🎯</div>
+                    <h3>"Success Story: From Startup to Industry Leader"</h3>
+                    <div class="press-source">YourStory</div>
+                    <div class="press-date">August 2023</div>
+                    <p>Journey of Elite Property Consultancy and the vision behind creating a client-first property advisory firm.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Elite Property Consultancy. All rights reserved.</p>
+        <p>Your Trusted Partner in Real Estate Excellence</p>
+    </footer>
+</body>
+</html>

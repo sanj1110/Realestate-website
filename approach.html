@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Approach - Elite Property Consultancy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-grey: #2c3e50;
+            --light-grey: #ecf0f1;
+            --light-red: #e74c3c;
+            --white: #ffffff;
+            --text-dark: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        header {
+            background: var(--white);
+            color: var(--primary-grey);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light-red);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--primary-grey);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--light-red);
+        }
+
+        .contact-sidebar {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--light-red);
+            color: var(--white);
+            padding: 1.5rem 1rem;
+            border-radius: 10px 0 0 10px;
+            z-index: 999;
+            box-shadow: -3px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .contact-sidebar p {
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            word-break: break-word;
+        }
+
+        .contact-sidebar p:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-sidebar a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-grey) 0%, var(--text-dark) 100%);
+            color: var(--white);
+            padding: 120px 2rem 60px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .intro-section {
+            padding: 80px 2rem;
+            background: var(--white);
+            text-align: center;
+        }
+
+        .intro-section h2 {
+            font-size: 2.5rem;
+            color: var(--primary-grey);
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            max-width: 900px;
+            margin: 0 auto;
+            color: var(--text-dark);
+        }
+
+        .process-section {
+            padding: 80px 2rem;
+            background: var(--light-grey);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-grey);
+        }
+
+        .process-steps {
+            display: grid;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 2rem;
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            align-items: start;
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateX(10px);
+        }
+
+        .step-number {
+            width: 100px;
+            height: 100px;
+            background: var(--light-red);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .step-content h3 {
+            font-size: 1.8rem;
+            color: var(--primary-grey);
+            margin-bottom: 1rem;
+        }
+
+        .step-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .principles-section {
+            padding: 80px 2rem;
+            background: var(--white);
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .principle-card {
+            background: var(--light-grey);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-top: 5px solid var(--light-red);
+        }
+
+        .principle-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .principle-card h3 {
+            font-size: 1.6rem;
+            color: var(--primary-grey);
+            margin-bottom: 1rem;
+        }
+
+        .principle-card p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .methodology-section {
+            padding: 80px 2rem;
+            background: var(--light-grey);
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .methodology-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .methodology-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .methodology-card h3 {
+            color: var(--light-red);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .methodology-card p {
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .cta-section {
+            padding: 80px 2rem;
+            background: linear-gradient(135deg, var(--primary-grey) 0%, var(--text-dark) 100%);
+            text-align: center;
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--light-red);
+            color: var(--white);
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        footer {
+            background: var(--primary-grey);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .step {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .step-number {
+                margin: 0 auto;
+            }
+
+            .contact-sidebar {
+                position: static;
+                transform: none;
+                border-radius: 10px;
+                margin: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Elite Property Consultancy</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="approach.html">Our Approach</a></li>
+                    <li><a href="awards.html">Awards</a></li>
+                    <li><a href="booking.html">Book Consultancy</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="contact-sidebar">
+        <p>📧 <a href="mailto:info@eliteproperty.com">info@eliteproperty.com</a></p>
+        <p>📞 <a href="tel:+919876543210">+91 98765 43210</a></p>
+    </div>
+
+    <section class="page-hero">
+        <h1>Our Proven Approach</h1>
+        <p>A systematic methodology designed to protect your interests and maximize value</p>
+    </section>
+
+    <section class="intro-section">
+        <div class="container">
+            <h2>Why Our Approach Works</h2>
+            <p>At Elite Property Consultancy, we've developed a comprehensive, client-centric approach that combines legal expertise, technical knowledge, and market insights. Our methodology has been refined over 15 years and hundreds of successful projects, ensuring that every client receives thorough, professional service that delivers real value.</p>
+        </div>
+    </section>
+
+    <section class="process-section">
+        <div class="container">
+            <h2 class="section-title">Our 6-Step Process</h2>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Initial Consultation</h3>
+                        <p>We begin with a detailed discussion to understand your specific needs, requirements, and concerns. This consultation helps us tailor our services to your unique situation and establish clear objectives for the engagement.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Comprehensive Assessment</h3>
+                        <p>Our team conducts a thorough evaluation of the property, documents, or project. This includes site visits, document verification, legal checks, and technical inspections as per the service requirements.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Detailed Analysis</h3>
+                        <p>We analyze all collected information using our proprietary frameworks and checklists. Our experts identify potential risks, red flags, and opportunities that could impact your decision or investment.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Expert Recommendations</h3>
+                        <p>Based on our analysis, we provide clear, actionable recommendations. We explain complex findings in simple terms and outline the implications of various options available to you.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Implementation Support</h3>
+                        <p>We don't just provide reports – we support you through implementation. Whether it's negotiating with builders, coordinating with contractors, or managing ongoing inspections, we're with you every step of the way.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>Follow-up & Review</h3>
+                        <p>Our commitment doesn't end with delivery. We provide follow-up consultations to address any questions and ensure that our recommendations have been successfully implemented to your satisfaction.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="principles-section">
+        <div class="container">
+            <h2 class="section-title">Guiding Principles</h2>
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-icon">🛡️</div>
+                    <h3>Client Protection First</h3>
+                    <p>Every decision we make prioritizes your interests and protection. We act as your advocate, identifying risks and safeguarding your investment from potential pitfalls.</p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-icon">📊</div>
+                    <h3>Data-Driven Decisions</h3>
+                    <p>Our recommendations are based on thorough research, verified data, and market analysis. We don't rely on assumptions – we provide evidence-based guidance you can trust.</p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-icon">🔍</div>
+                    <h3>Complete Transparency</h3>
+                    <p>We believe in open communication. You'll receive detailed reports explaining our findings, methodology, and reasoning behind every recommendation we make.</p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-icon">⚖️</div>
+                    <h3>Unbiased Expertise</h3>
+                    <p>We maintain complete independence from builders, developers, and contractors. Our only allegiance is to you, ensuring you receive objective, impartial advice.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="methodology-section">
+        <div class="container">
+            <h2 class="section-title">What Sets Us Apart</h2>
+            <div class="methodology-grid">
+                <div class="methodology-card">
+                    <h3>Multidisciplinary Team</h3>
+                    <p>Our experts include lawyers, engineers, architects, and market analysts who collaborate to provide comprehensive insights.</p>
+                </div>
+
+                <div class="methodology-card">
+                    <h3>Proprietary Checklists</h3>
+                    <p>We've developed extensive verification checklists covering 200+ parameters to ensure nothing is overlooked.</p>
+                </div>
+
+                <div class="methodology-card">
+                    <h3>Technology Integration</h3>
+                    <p>We use advanced tools for document verification, 3D modeling, and data analysis to enhance accuracy and efficiency.</p>
+                </div>
+
+                <div class="methodology-card">
+                    <h3>Network Access</h3>
+                    <p>Our established relationships with government offices, legal firms, and industry professionals expedite processes.</p>
+                </div>
+
+                <div class="methodology-card">
+                    <h3>Continuous Updates</h3>
+                    <p>We keep you informed throughout the process with regular progress updates and immediate communication of critical findings.</p>
+                </div>
+
+                <div class="methodology-card">
+                    <h3>Post-Service Support</h3>
+                    <p>Our relationship doesn't end with report delivery. We provide ongoing consultation and support as needed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Experience the Elite Difference</h2>
+            <p>Let our proven approach work for you. Schedule a consultation today and discover how our methodology can protect your interests and maximize your real estate success.</p>
+            <a href="booking.html" class="cta-button">Book Your Consultation</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Elite Property Consultancy. All rights reserved.</p>
+        <p>Your Trusted Partner in Real Estate Excellence</p>
+    </footer>
+</body>
+</html>

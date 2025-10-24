@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Consultancy - Elite Property Consultancy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-grey: #2c3e50;
+            --light-grey: #ecf0f1;
+            --light-red: #e74c3c;
+            --white: #ffffff;
+            --text-dark: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        header {
+            background: var(--white);
+            color: var(--primary-grey);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light-red);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--primary-grey);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: var(--light-red);
+        }
+
+        .contact-sidebar {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--light-red);
+            color: var(--white);
+            padding: 1.5rem 1rem;
+            border-radius: 10px 0 0 10px;
+            z-index: 999;
+            box-shadow: -3px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .contact-sidebar p {
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            word-break: break-word;
+        }
+
+        .contact-sidebar p:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-sidebar a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .page-hero {
+            background: linear-gradient(135deg, var(--primary-grey) 0%, var(--text-dark) 100%);
+            color: var(--white);
+            padding: 120px 2rem 60px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .page-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .booking-section {
+            padding: 80px 2rem;
+            background: var(--light-grey);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .booking-intro {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .booking-intro h2 {
+            color: var(--primary-grey);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .booking-intro p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .form-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .form-title {
+            font-size: 2rem;
+            color: var(--primary-grey);
+            margin-bottom: 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--light-red);
+            padding-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-grey);
+            font-size: 1.05rem;
+        }
+
+        .required {
+            color: var(--light-red);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid var(--light-grey);
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--light-red);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .checkbox-group {
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.8rem;
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--light-red);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .submit-button:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .info-section {
+            background: var(--white);
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .info-card {
+            background: var(--light-grey);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .info-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--light-red);
+        }
+
+        .info-card h3 {
+            color: var(--primary-grey);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .info-card p {
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        footer {
+            background: var(--primary-grey);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                padding: 2rem;
+            }
+
+            .contact-sidebar {
+                position: static;
+                transform: none;
+                border-radius: 10px;
+                margin: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Elite Property Consultancy</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="approach.html">Our Approach</a></li>
+                    <li><a href="awards.html">Awards</a></li>
+                    <li><a href="booking.html">Book Consultancy</a></li>
+                    <li><a href="contact.html">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="contact-sidebar">
+        <p>📧 <a href="mailto:info@eliteproperty.com">info@eliteproperty.com</a></p>
+        <p>📞 <a href="tel:+919876543210">+91 98765 43210</a></p>
+    </div>
+
+    <section class="page-hero">
+        <h1>Book Your Consultation</h1>
+        <p>Take the first step towards a secure property decision</p>
+    </section>
+
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-intro">
+                <h2>Schedule Your Expert Consultation</h2>
+                <p>Our team of property experts is ready to guide you through your real estate journey. Whether you're buying, selling, or investing, we'll provide the insights and support you need to make informed decisions. Fill out the form below and we'll get back to you within 24 hours.</p>
+            </div>
+
+            <div class="form-container">
+                <h2 class="form-title">Consultation Booking Form</h2>
+                <form id="bookingForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name <span class="required">*</span></label>
+                            <input type="text" name="fullName" required placeholder="Enter your full name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <input type="email" name="email" required placeholder="your.email@example.com">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone Number <span class="required">*</span></label>
+                            <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Preferred Date <span class="required">*</span></label>
+                            <input type="date" name="preferredDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>City/Location <span class="required">*</span></label>
+                        <input type="text" name="location" required placeholder="City where property is located">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Service Required <span class="required">*</span></label>
+                        <select name="service" required>
+                            <option value="">-- Select a Service --</option>
+                            <option value="due-diligence">Due Diligence</option>
+                            <option value="builder-agreement">Builder Buyer Agreement Review</option>
+                            <option value="progress-check">Project Progress Checks</option>
+                            <option value="fitout">Fitout Inspection</option>
+                            <option value="interior-design">Interior Design & Engineering</option>
+                            <option value="rental-management">Rental Management</option>
+                            <option value="multiple">Multiple Services</option>
+                            <option value="consultation">General Consultation</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Property Type</label>
+                        <select name="propertyType">
+                            <option value="">-- Select Property Type --</option>
+                            <option value="apartment">Apartment/Flat</option>
+                            <option value="villa">Independent Villa/House</option>
+                            <option value="plot">Plot/Land</option>
+                            <option value="commercial">Commercial Property</option>
+                            <option value="rental">Rental Property</option>
+                            <option value="under-construction">Under Construction</option>
+                            <option value="resale">Resale Property</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Consultation Mode <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="radio" name="consultationMode" value="in-person" required>
+                                In-Person Meeting
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="consultationMode" value="video-call" required>
+                                Video Call
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="radio" name="consultationMode" value="phone-call" required>
+                                Phone Call
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Information</label>
+                        <textarea name="message" placeholder="Please provide any additional details about your property or specific concerns you'd like to discuss..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="agreement" required>
+                            I agree to the terms and conditions and privacy policy <span class="required">*</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="submit-button">Book Consultation</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section">
+        <div class="container">
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">⏱️</div>
+                    <h3>Quick Response</h3>
+                    <p>We respond to all booking requests within 24 hours and confirm your appointment details.</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">💰</div>
+                    <h3>Free Initial Consultation</h3>
+                    <p>Your first 30-minute consultation is absolutely free with no obligations.</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🎯</div>
+                    <h3>Tailored Solutions</h3>
+                    <p>Every consultation is customized to address your specific property needs and concerns.</p>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">🔒</div>
+                    <h3>Complete Confidentiality</h3>
+                    <p>All information shared during consultation is kept strictly confidential and secure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Elite Property Consultancy. All rights reserved.</p>
+        <p>Your Trusted Partner in Real Estate Excellence</p>
+    </footer>
+
+    <script>
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            alert('Thank you for booking a consultation with us! We will contact you within 24 hours to confirm your appointment.');
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Set minimum date to today
+        const dateInput = document.querySelector('input[type="date"]');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+    </script>
+</body>
+</html>
