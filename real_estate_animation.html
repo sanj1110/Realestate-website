@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Consultant Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: #16213e;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        canvas {
+            width: 100%;
+            height: auto;
+            background: white;
+            border-radius: 10px;
+            display: block;
+        }
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .play-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        .pause-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        .pause-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(245, 87, 108, 0.4);
+        }
+        .restart-btn {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.4);
+        }
+        .skip-btn {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+        }
+        .skip-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(67, 233, 123, 0.4);
+        }
+        .info {
+            margin-top: 20px;
+            color: white;
+            text-align: center;
+            font-size: 18px;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        .scene-indicator {
+            font-weight: bold;
+            color: #43e97b;
+            font-size: 20px;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 Real Estate Consultant Journey</h1>
+        <canvas id="animationCanvas" width="1200" height="675"></canvas>
+        <div class="controls">
+            <button class="play-btn" onclick="playAnimation()">▶ Play</button>
+            <button class="pause-btn" onclick="pauseAnimation()">⏸ Pause</button>
+            <button class="restart-btn" onclick="restartAnimation()">↻ Restart</button>
+            <button class="skip-btn" onclick="skipScene()">⏭ Skip Scene</button>
+        </div>
+        <div class="info">
+            <div class="scene-indicator" id="sceneInfo">Scene 1: The Dilemma</div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('animationCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let animationId;
+        let currentScene = 0;
+        let sceneTime = 0;
+        let isPaused = false;
+        let animationSpeed = 1;
+
+        const scenes = [
+            {
+                name: "Scene 1: The Dilemma",
+                duration: 300,
+                render: renderScene1
+            },
+            {
+                name: "Scene 2: The Solution",
+                duration: 250,
+                render: renderScene2
+            },
+            {
+                name: "Scene 3: Initial Consultation",
+                duration: 300,
+                render: renderScene3
+            },
+            {
+                name: "Scene 4: Title Verification",
+                duration: 350,
+                render: renderScene4
+            },
+            {
+                name: "Scene 5: RERA Registration",
+                duration: 350,
+                render: renderScene5
+            },
+            {
+                name: "Scene 6: Builder Vetting",
+                duration: 350,
+                render: renderScene6
+            },
+            {
+                name: "Scene 7: Project Plan Review",
+                duration: 350,
+                render: renderScene7
+            },
+            {
+                name: "Scene 8: Fitout Inspection",
+                duration: 350,
+                render: renderScene8
+            },
+            {
+                name: "Scene 9: Interior Design",
+                duration: 350,
+                render: renderScene9
+            },
+            {
+                name: "Scene 10: Leasing Assistance",
+                duration: 400,
+                render: renderScene10
+            },
+            {
+                name: "Scene 11: Happy Ending",
+                duration: 350,
+                render: renderScene11
+            },
+            {
+                name: "Scene 12: Call to Action",
+                duration: 300,
+                render: renderScene12
+            }
+        ];
+
+        // Helper functions
+        function drawRect(x, y, w, h, color, radius = 0) {
+            ctx.fillStyle = color;
+            if (radius === 0) {
+                ctx.fillRect(x, y, w, h);
+            } else {
+                ctx.beginPath();
+                ctx.moveTo(x + radius, y);
+                ctx.lineTo(x + w - radius, y);
+                ctx.quadraticCurveTo(x + w, y, x + w, y + radius);
+                ctx.lineTo(x + w, y + h - radius);
+                ctx.quadraticCurveTo(x + w, y + h, x + w - radius, y + h);
+                ctx.lineTo(x + radius, y + h);
+                ctx.quadraticCurveTo(x, y + h, x, y + h - radius);
+                ctx.lineTo(x, y + radius);
+                ctx.quadraticCurveTo(x, y, x + radius, y);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function drawCircle(x, y, r, color) {
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(x, y, r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawText(text, x, y, size, color, align = 'center', weight = 'normal') {
+            ctx.fillStyle = color;
+            ctx.font = `${weight} ${size}px 'Segoe UI', sans-serif`;
+            ctx.textAlign = align;
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, x, y);
+        }
+
+        function drawPerson(x, y, scale = 1, color = '#3498db') {
+            // Head
+            drawCircle(x, y - 40 * scale, 20 * scale, '#ffd1a3');
+            // Body
+            drawRect(x - 15 * scale, y - 15 * scale, 30 * scale, 50 * scale, color, 5 * scale);
+            // Arms
+            drawRect(x - 35 * scale, y - 10 * scale, 20 * scale, 8 * scale, color, 3 * scale);
+            drawRect(x + 15 * scale, y - 10 * scale, 20 * scale, 8 * scale, color, 3 * scale);
+            // Legs
+            drawRect(x - 15 * scale, y + 35 * scale, 12 * scale, 35 * scale, '#2c3e50', 3 * scale);
+            drawRect(x + 3 * scale, y + 35 * scale, 12 * scale, 35 * scale, '#2c3e50', 3 * scale);
+        }
+
+        function drawDocument(x, y, w, h, color = 'white') {
+            drawRect(x, y, w, h, color, 5);
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, y, w, h);
+            // Lines
+            for (let i = 0; i < 3; i++) {
+                drawRect(x + 10, y + 15 + i * 15, w - 20, 3, '#bdc3c7', 1);
+            }
+        }
+
+        function drawCheckmark(x, y, size, color = '#27ae60') {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 5;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(x - size/2, y);
+            ctx.lineTo(x - size/6, y + size/2);
+            ctx.lineTo(x + size/2, y - size/2);
+            ctx.stroke();
+        }
+
+        function drawHouse(x, y, size, color = '#3498db') {
+            // Base
+            drawRect(x - size/2, y, size, size * 0.8, color, 5);
+            // Roof
+            ctx.fillStyle = '#e74c3c';
+            ctx.beginPath();
+            ctx.moveTo(x - size * 0.6, y);
+            ctx.lineTo(x, y - size * 0.5);
+            ctx.lineTo(x + size * 0.6, y);
+            ctx.closePath();
+            ctx.fill();
+            // Door
+            drawRect(x - size * 0.15, y + size * 0.4, size * 0.3, size * 0.4, '#8b4513', 3);
+            // Window
+            drawRect(x - size * 0.35, y + size * 0.2, size * 0.25, size * 0.25, '#87ceeb', 2);
+        }
+
+        // Scene render functions
+        function renderScene1(t) {
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#e8f4f8');
+            gradient.addColorStop(1, '#b8d4e0');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Title
+            drawText("Meet Rahul", canvas.width/2, 60, 48, '#2c3e50', 'center', 'bold');
+            
+            // Person - Rahul with worried expression
+            const rahulX = 300;
+            const rahulY = 300;
+            drawPerson(rahulX, rahulY, 1.2, '#3498db');
+            
+            // Desk
+            drawRect(200, 380, 200, 15, '#8b4513', 3);
+            
+            // Laptop
+            drawRect(240, 340, 80, 50, '#2c3e50', 3);
+            drawRect(245, 345, 70, 35, '#87ceeb', 2);
+            
+            // Floating brochures with animation
+            const float1 = Math.sin(t / 50) * 10;
+            const float2 = Math.sin(t / 40 + 1) * 10;
+            const float3 = Math.sin(t / 60 + 2) * 10;
+            
+            drawDocument(500, 150 + float1, 120, 80, '#fff');
+            drawDocument(650, 200 + float2, 120, 80, '#fff');
+            drawDocument(800, 180 + float3, 120, 80, '#fff');
+            
+            // Question marks floating
+            const alpha = Math.sin(t / 30) * 0.3 + 0.7;
+            ctx.globalAlpha = alpha;
+            drawText("?", rahulX - 80, 150, 60, '#e74c3c', 'center', 'bold');
+            drawText("?", rahulX + 80, 180, 50, '#e67e22', 'center', 'bold');
+            drawText("?", rahulX, 120, 55, '#f39c12', 'center', 'bold');
+            ctx.globalAlpha = 1;
+            
+            // Subtitle
+            drawRect(250, 550, 700, 80, 'rgba(52, 152, 219, 0.9)', 10);
+            drawText("Confused about property investment?", canvas.width/2, 575, 28, 'white', 'center', 'normal');
+            drawText("Too many options, too many risks!", canvas.width/2, 610, 24, 'white', 'center', 'normal');
+        }
+
+        function renderScene2(t) {
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#e8f8f5');
+            gradient.addColorStop(1, '#a8e6cf');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawText("The Solution", canvas.width/2, 60, 48, '#16a085', 'center', 'bold');
+            
+            // Rahul with phone
+            drawPerson(250, 300, 1.1, '#3498db');
+            drawRect(230, 280, 40, 60, '#34495e', 5);
+            drawRect(235, 285, 30, 45, '#27ae60', 3);
+            
+            // Arrow pointing right
+            const arrowPulse = Math.sin(t / 20) * 10 + 500;
+            ctx.strokeStyle = '#27ae60';
+            ctx.lineWidth = 8;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(350, 300);
+            ctx.lineTo(arrowPulse, 300);
+            ctx.stroke();
+            // Arrow head
+            ctx.beginPath();
+            ctx.moveTo(arrowPulse, 300);
+            ctx.lineTo(arrowPulse - 20, 285);
+            ctx.lineTo(arrowPulse - 20, 315);
+            ctx.closePath();
+            ctx.fillStyle = '#27ae60';
+            ctx.fill();
+            
+            // Consultant - Ms. Sharma
+            drawPerson(750, 300, 1.2, '#e74c3c');
+            
+            // Professional badge
+            drawCircle(750, 200, 60, '#f39c12');
+            drawText("Expert", 750, 195, 18, 'white', 'center', 'bold');
+            drawText("Consultant", 750, 215, 14, 'white', 'center', 'normal');
+            
+            // Text box
+            drawRect(200, 480, 800, 120, 'rgba(22, 160, 133, 0.9)', 10);
+            drawText("RealtyWise Consultants", canvas.width/2, 520, 32, 'white', 'center', 'bold');
+            drawText("Your Trusted Guide Through Every Step", canvas.width/2, 560, 24, 'white', 'center', 'normal');
+        }
+
+        function renderScene3(t) {
+            // Background
+            ctx.fillStyle = '#ecf0f1';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawText("Initial Consultation", canvas.width/2, 60, 48, '#2c3e50', 'center', 'bold');
+            
+            // Office setting
+            drawRect(50, 450, 1100, 200, '#34495e', 0);
+            
+            // Desk
+            drawRect(350, 380, 500, 20, '#8b4513', 5);
+            
+            // Rahul and Ms. Sharma sitting
+            drawPerson(250, 320, 1, '#3498db');
+            drawPerson(950, 320, 1, '#e74c3c');
+            
+            // Floating icons with animation
+            const bounce = Math.abs(Math.sin(t / 30)) * 20;
+            
+            // Budget icon
+            drawCircle(450, 180 - bounce, 60, '#27ae60');
+            drawText("₹", 450, 180 - bounce, 40, 'white', 'center', 'bold');
+            drawText("Budget", 450, 260, 18, '#2c3e50', 'center', 'bold');
+            
+            // Location icon
+            drawCircle(600, 180 - bounce / 2, 60, '#3498db');
+            drawText("📍", 600, 180 - bounce / 2, 40, 'white', 'center', 'normal');
+            drawText("Location", 600, 260, 18, '#2c3e50', 'center', 'bold');
+            
+            // Goals icon
+            drawCircle(750, 180 - bounce, 60, '#e74c3c');
+            drawText("🎯", 750, 180 - bounce, 40, 'white', 'center', 'normal');
+            drawText("Goals", 750, 260, 18, '#2c3e50', 'center', 'bold');
+            
+            // Text box
+            drawRect(150, 520, 900, 80, 'rgba(52, 152, 219, 0.9)', 10);
+            drawText("Understanding Your Needs & Investment Goals", canvas.width/2, 560, 28, 'white', 'center', 'normal');
+        }
+
+        function renderScene4(t) {
+            // Background
+            ctx.fillStyle = '#fef9e7';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawText("Title Verification", canvas.width/2, 60, 48, '#d68910', 'center', 'bold');
+            
+            // Large magnifying glass
+            drawCircle(400, 300, 120, 'rgba(52, 152, 219, 0.3)');
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 8;
+            ctx.beginPath();
+            ctx.arc(400, 300, 120, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Handle
+            ctx.strokeStyle = '#8b4513';
+            ctx.lineWidth = 12;
+            ctx.beginPath();
+            ctx.moveTo(480, 380);
+            ctx.lineTo(550, 450);
+            ctx.stroke();
+            
+            // Documents being examined
+            drawDocument(320, 240, 160, 120, 'white');
+            
+            // Animated checkmarks appearing
+            if (t > 100) {
+                drawCheckmark(650, 180, 40, '#27ae60');
+                drawText("Clear Title", 750, 180, 22, '#27ae60', 'left', 'bold');
+            }
+            if (t > 150) {
+                drawCheckmark(650, 250, 40, '#27ae60');
+                drawText("No Disputes", 750, 250, 22, '#27ae60', 'left', 'bold');
+            }
+            if (t > 200) {
+                drawCheckmark(650, 320, 40, '#27ae60');
+                drawText("Verified Ownership", 750, 320, 22, '#27ae60', 'left', 'bold');
+            }
+            if (t > 250) {
+                drawCheckmark(650, 390, 40, '#27ae60');
+                drawText("No Encumbrances", 750, 390, 22, '#27ae60', 'left', 'bold');
+            }
+            
+            // Bottom text
+            drawRect(200, 520, 800, 100, 'rgba(230, 126, 34, 0.9)', 10);
+            drawText("Legal Team Verifies Complete Ownership History", canvas.width/2, 555, 28, 'white', 'center', 'bold');
+            drawText("Clear Title = Peace of Mind", canvas.width/2, 590, 24, 'white', 'center', 'normal');
+        }
+
+        function renderScene5(t) {
+            // Background
+            ctx.fillStyle = '#e8f8f5';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawText("RERA Registration Check", canvas.width/2, 60, 48, '#16a085', 'center', 'bold');
+            
+            // Computer monitor
+            drawRect(300, 200, 600, 350, '#2c3e50', 10);
+            drawRect(320, 220, 560, 280, '#87ceeb', 5);
+            
+            // RERA portal interface
+            drawRect(340, 240, 520, 60, 'white', 5);
+            drawText("🔍 Search RERA Registration", 600, 270, 22, '#7f8c8d', 'center', 'normal');
+            
+            // Certificate appearing with animation
+            const certScale = Math.min(t / 150, 1);
+            if (t > 50) {
+                ctx.save();
+                ctx.translate(600, 400);
+                ctx.scale(certScale, certScale);
+                drawRect(-200, -100, 400, 200, 'white', 10);
+                ctx.strokeStyle = '#f39c12';
+                ctx.lineWidth = 6;
+                ctx.strokeRect(-200, -100, 400, 200);
+                drawText("RERA", 0, -50, 32, '#16a085', 'center', 'bold');
+                drawText("CERTIFIED", 0, -10, 24, '#16a085', 'center', 'bold');
+                drawText("Registration No.", 0, 30, 18, '#7f8c8d', 'center', 'normal');
+                drawText("MH/RERA/2024/12345", 0, 60, 20, '#2c3e50', 'center', 'bold');
+                ctx.restore();
+            }
+            
+            // Checkmark badge
+            if (t > 200) {
+                drawCircle(850, 250, 40, '#27ae60');
+                drawCheckmark(850, 250, 30, 'white');
+            }
+            
+            // Bottom text
+            drawRect(150, 570, 900, 70, 'rgba(22, 160, 133, 0.9)', 10);
+            drawText("RERA = Buyer Protection | Verified Compliance", canvas.width/2, 605, 26, 'white', 'center', 'normal');
+        }
+
+        function renderScene6(t) {
+            // Background
+            ctx.fillStyle = '#fef5e7';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawText("Builder Vetting", canvas.width/2, 60, 48, '#d68910', 'center', 'bold');
+            
+            // Builder profile card
+            drawRect(150, 150, 400, 400, 'white', 15);
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(150, 150, 400, 400);
+            
+            // Builder icon
+            drawCircle(350, 230, 50, '#3498db');
+            drawText("🏢", 350, 230, 40, 'white', 'center', 'normal');
+            
+            drawText("XYZ Builders", 350, 310, 28, '#2c3e50', 'center', 'bold');
+            
+            // Star rating with animation
+            const starY = 360;
+            for (let i = 0; i < 5; i++) {
+                const starScale = t > (i * 30) ? 1 : 0;
+                if (starScale > 0) {
+                    drawText("⭐", 250 + i * 50, starY, 30, '#f39c12', 'center', 'normal');
+                }
+            }
+            
+            // Stats
+            if (t > 100) {
+                drawText("✓ 15+ Years Experience", 350, 420, 20, '#27ae60', 'center', 'bold');
+            }
+            if (t > 150) {
+                drawText("✓ 95% On-Time Delivery", 350, 460, 20, '#27ae60', 'center', 'bold');
+            }
+            if (t > 200) {
+                drawText("✓ Strong Financial Health", 350, 500, 20, '#27ae60', 'center', 'bold');
+            }
+            
+            // Timeline on right side
+            drawRect(620, 180, 450, 340, '#ecf0f1', 10);
+            drawText("Track Record", 845, 220, 28, '#2c3e50', 'center', 'bold');
+            
+            // Timeline bars
+            const projects = [
+                { year: '2020', completion: 100, name: 'Green Valley' },
+                { year: '2021', completion: 100, name: 'Sky Heights' },
+                { year: '2022', completion: 95, name: 'Lake View' },
+                { year: '2023', completion: 100, name: 'Urban Square' }
+            ];
+            
+            projects.forEach((proj, idx) => {
+                const yPos = 280 + idx * 55;
+                drawText(proj.year, 650, yPos, 18, '#7f8c8d', 'left', 'bold');
+                drawRect(710, yPos - 12, 300, 24, '#d5d8dc', 5);
+                const barWidth = (proj.completion / 100) * 300 * Math.min(t / 150, 1);
+                drawRect(710, yPos - 12, barWidth, 24, '#27ae60', 5);
+                drawText(proj.completion + '%', 1030, yPos, 16, '#2c3e50', 'left', 'bold');
+            });
+        }
+
+        function renderScene7(t) {
+            // Background
+            ctx.fillStyle = '#eaf2f8';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawText("Project Plan Review", canvas.width/2, 60, 48, '#2874a6', 'center', 'bold');
+            
+            // 3D Blueprint effect - rotating
+            const rotation = (t / 100) % (Math.PI * 2);
+            ctx.save();
+            ctx.translate(400, 320);
+            ctx.rotate(rotation * 0.3);
+            
+            // Blueprint base
+            drawRect(-180, -120, 360, 240, '#1a5490', 8);
+            drawRect(-170, -110, 340, 220, '#2E86C1', 5);
+            
+            // Grid lines
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = 1;
+            for (let i = -160; i < 160; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(i, -100);
+                ctx.lineTo(i, 100);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(-160, i);
+                ctx.lineTo(160, i);
+                ctx.stroke();
+            }
+            
+            // Rooms
+            drawRect(-140, -80, 120, 80, 'rgba(255, 255, 255, 0.2)', 3);
+            drawRect(-10, -80, 130, 80, 'rgba(255, 255, 255, 0.2)', 3);
+            drawRect(-140, 10, 120, 80, 'rgba(255, 255, 255, 0.2)', 3);
+            drawRect(-10, 10, 130, 80, 'rgba(255, 255, 255, 0.2)', 3);
+            
+            ctx.restore();
+            
+            // Amenities checklist
+            drawRect(680, 180, 450, 380, 'white', 12);
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 3;
+            ctx.strokeRect(680, 180, 450, 380);
+            
+            drawText("Verified Amenities", 905, 220, 26, '#2c3e50', 'center', 'bold');
+            
+            const amenities = [
+                { icon: '🏊', name: 'Swimming Pool', delay: 50 },
+                { icon: '💪', name: 'Gymnasium', delay: 80 },
+                { icon: '🅿️', name: 'Parking Space', delay: 110 },
+                { icon: '🌳', name: 'Garden Area', delay: 140 },
+                { icon: '🔒', name: 'Security 24/7', delay: 170 },
+                { icon: '⚡', name: 'Power Backup', delay: 200 }
+            ];
+            
+            amenities.forEach((item, idx) => {
+                const yPos = 280 + idx * 50;
+                if (t > item.delay) {
+                    drawText(item.icon, 720, yPos, 30, '#2c3e50', 'left', 'normal');
+                    drawText(item.name, 780, yPos, 20, '#34495e', 'left', 'normal');
+                    drawCheckmark(1060, yPos, 25, '#27ae60');
+                }
+            });
+            
+            // Bottom text
+            drawRect(200, 590, 800, 60, 'rgba(41, 128, 185, 0.9)', 10);
+            drawText("What's Promised = What's Delivered", canvas.width/2, 620, 26, 'white', 'center', 'bold');
+        }
+
+        function renderScene8(t) {
+            // Background
+            ctx.fillStyle = '#fef9e7';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawText("Fitout Inspection", canvas.width/2, 60, 48, '#d68910', 'center', 'bold');
+            
+            // Inspector figure
+            drawPerson(250, 320, 1.2, '#e67e22');
+            // Hard hat
+            drawCircle(250, 240, 30, '#f39c12');
+            drawRect(220, 235, 60, 10, '#f39c12', 0);
+            
+            // Clipboard
+            drawRect(200, 340, 50, 70, '#8b4513', 3);
+            drawRect(205, 345, 40, 60, 'white', 2);
+            
+            // Inspection points with magnifying glass effect
+            const inspectPoints = [
+                { x: 550, y: 200, label: 'Electrical', icon: '⚡', color: '#f39c12' },
+                { x: 750, y: 200, label: 'Plumbing', icon: '🚰', color: '#3498db' },
+                { x: 950, y: 200, label: 'Walls', icon: '🧱', color: '#95a5a6' },
+                { x: 550, y: 380, label: 'Flooring', icon: '▦', color: '#8b4513' },
+                { x: 750, y: 380, label: 'Windows', icon: '🪟', color: '#87ceeb' },
+                { x: 950, y: 380, label: 'Doors', icon: '🚪', color: '#a0522d' }
+            ];
+            
+            inspectPoints.forEach((point, idx) => {
+                const delay = idx * 40;
+                if (t > delay) {
+                    const pulse = Math.sin((t - delay) / 15) * 5 + 65;
+                    drawCircle(point.x, point.y, pulse, 'rgba(52, 152, 219, 0.2)');
+                    drawCircle(point.x, point.y, 50, point.color);
+                    drawText(point.icon, point.x, point.y, 32, 'white', 'center', 'normal');
+                    drawText(point.label, point.x, point.y + 70, 18, '#2c3e50', 'center', 'bold');
+                    
+                    if (t > delay + 30) {
+                        drawCheckmark(point.x + 40, point.y - 40, 20, '#27ae60');
+                    }
+                }
+            });
+            
+            // Quality score meter
+            drawRect(200, 500, 800, 120, 'rgba(230, 126, 34, 0.9)', 12);
+            drawText("150+ Point Quality Inspection", canvas.width/2, 540, 28, 'white', 'center', 'bold');
+            
+            // Progress bar
+            const progress = Math.min(t / 300 * 100, 100);
+            drawRect(250, 575, 700, 30, 'rgba(255, 255, 255, 0.3)', 15);
+            drawRect(250, 575, 700 * (progress / 100), 30, '#27ae60', 15);
+            drawText(Math.floor(progress) + '% Complete', canvas.width/2, 590, 20, 'white', 'center', 'bold');
+        }
+
+        function renderScene9(t) {
+            // Background
+            ctx.fillStyle = '#f4ecf7';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawText("Interior Design Assistance", canvas.width/2, 60, 48, '#7d3c98', 'center', 'bold');
+            
+            // Split screen effect - Before & After
+            const splitX = 600;
+            
+            // BEFORE (left side)
+            drawRect(50, 120, 500, 450, '#d5d8dc', 10);
+            drawText("BEFORE", 300, 160, 24, '#7f8c8d', 'center', 'bold');
+            
+            // Empty room
+            drawRect(100, 220, 400, 300, '#ecf0f1', 5);
+            // Simple walls
+            ctx.strokeStyle = '#95a5a6';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(100, 220, 400, 300);
+            
+            // AFTER (right side)
+            drawRect(650, 120, 500, 450, 'white', 10);
+            ctx.strokeStyle = '#8e44ad';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(650, 120, 500, 450);
+            drawText("AFTER", 900, 160, 24, '#8e44ad', 'center', 'bold');
+            
+            // Furnished room (appearing with animation)
+            const furnitureAlpha = Math.min(t / 200, 1);
+            ctx.globalAlpha = furnitureAlpha;
+            
+            // Colored wall
+            drawRect(700, 220, 400, 300, '#e8daef', 5);
+            
+            // Sofa
+            drawRect(750, 380, 150, 80, '#8e44ad', 8);
+            drawRect(750, 360, 150, 25, '#8e44ad', 5);
+            
+            // Coffee table
+            drawRect(820, 440, 100, 60, '#a0522d', 5);
+            
+            // Lamp
+            drawCircle(1050, 280, 25, '#f39c12');
+            drawRect(1040, 300, 20, 60, '#7f8c8d', 0);
+            drawRect(1030, 360, 40, 10, '#34495e', 3);
+            
+            // Painting
+            drawRect(770, 250, 80, 60, '#3498db', 3);
+            
+            // Plant
+            drawCircle(950, 450, 15, '#27ae60');
+            drawRect(945, 465, 10, 30, '#8b4513', 0);
+            drawCircle(960, 490, 12, '#e67e22');
+            
+            ctx.globalAlpha = 1;
+            
+            // Color palette floating
+            if (t > 100) {
+                const colors = ['#8e44ad', '#3498db', '#e74c3c', '#27ae60', '#f39c12'];
+                colors.forEach((color, idx) => {
+                    const yOffset = Math.sin((t + idx * 20) / 20) * 10;
+                    drawCircle(200 + idx * 80, 600 + yOffset, 30, color);
+                });
+            }
+            
+            // Bottom text
+            drawRect(200, 600, 800, 60, 'rgba(125, 60, 152, 0.9)', 10);
+            drawText("Your Space, Your Style - Budget-Friendly Design", canvas.width/2, 630, 26, 'white', 'center', 'bold');
+        }
+
+        function renderScene10(t) {
+            // Background
+            ctx.fillStyle = '#e8f6f3';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawText("Leasing & Rental Assistance", canvas.width/2, 60, 48, '#138d75', 'center', 'bold');
+            
+            // Property card
+            drawRect(150, 140, 350, 420, 'white', 12);
+            ctx.strokeStyle = '#16a085';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(150, 140, 350, 420);
+            
+            // Property image placeholder
+            drawRect(170, 160, 310, 200, '#85c1e2', 8);
+            drawHouse(325, 260, 100, '#3498db');
+            
+            // Property details
+            drawText("Premium Apartment", 325, 400, 24, '#2c3e50', 'center', 'bold');
+            drawText("2BHK | 1200 sq.ft", 325, 435, 18, '#7f8c8d', 'center', 'normal');
+            
+            // Rent amount
+            drawRect(200, 470, 250, 60, '#27ae60', 10);
+            drawText("₹ 25,000/month", 325, 500, 26, 'white', 'center', 'bold');
+            
+            // Arrow to tenant
+            ctx.strokeStyle = '#16a085';
+            ctx.lineWidth = 6;
+            ctx.beginPath();
+            ctx.moveTo(520, 340);
+            ctx.lineTo(620, 340);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(620, 340);
+            ctx.lineTo(605, 325);
+            ctx.lineTo(605, 355);
+            ctx.closePath();
+            ctx.fillStyle = '#16a085';
+            ctx.fill();
+            
+            // Tenant verification
+            drawRect(650, 200, 480, 280, '#ecf0f1', 10);
+            drawText("Tenant Verification", 890, 240, 26, '#2c3e50', 'center', 'bold');
+            
+            const verificationSteps = [
+                { icon: '✓', text: 'ID Verification', delay: 50 },
+                { icon: '✓', text: 'Background Check', delay: 100 },
+                { icon: '✓', text: 'Employment Verification', delay: 150 },
+                { icon: '✓', text: 'Legal Agreement', delay: 200 }
+            ];
+            
+            verificationSteps.forEach((step, idx) => {
+                const yPos = 290 + idx * 45;
+                if (t > step.delay) {
+                    drawCircle(700, yPos, 18, '#27ae60');
+                    drawText(step.icon, 700, yPos, 20, 'white', 'center', 'bold');
+                    drawText(step.text, 890, yPos, 20, '#34495e', 'center', 'normal');
+                }
+            });
+            
+            // Money flow animation
+            if (t > 220) {
+                const rupeeFloat = Math.sin(t / 20) * 10;
+                drawText("₹", 300, 560 - rupeeFloat, 40, '#27ae60', 'center', 'bold');
+                drawText("₹", 350, 570 - rupeeFloat * 1.2, 35, '#27ae60', 'center', 'bold');
+                drawText("₹", 400, 565 - rupeeFloat * 0.8, 38, '#27ae60', 'center', 'bold');
+            }
+            
+            // Bottom text
+            drawRect(150, 590, 900, 60, 'rgba(19, 141, 117, 0.9)', 10);
+            drawText("Verified Tenants | Legal Agreements | Hassle-Free Rental Income", canvas.width/2, 620, 24, 'white', 'center', 'bold');
+        }
+
+        function renderScene11(t) {
+            // Background - celebration
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#fef5e7');
+            gradient.addColorStop(1, '#f9e79f');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            drawText("Success Story!", canvas.width/2, 60, 48, '#d68910', 'center', 'bold');
+            
+            // Confetti
+            for (let i = 0; i < 30; i++) {
+                const x = (i * 40 + (t * 2) % canvas.width) % canvas.width;
+                const y = (100 + i * 20 + (t * 3) % canvas.height) % canvas.height;
+                const colors = ['#e74c3c', '#3498db', '#27ae60', '#f39c12', '#9b59b6'];
+                drawCircle(x, y, 5, colors[i % 5]);
+            }
+            
+            // Happy Rahul with keys
+            drawPerson(400, 320, 1.3, '#3498db');
+            
+            // Keys in hand
+            drawCircle(450, 280, 25, '#f39c12');
+            drawRect(465, 275, 40, 10, '#d68910', 2);
+            drawCircle(510, 280, 8, '#d68910');
+            
+            // Ms. Sharma giving thumbs up
+            drawPerson(800, 320, 1.2, '#e74c3c');
+            // Thumbs up
+            drawCircle(850, 280, 20, '#ffd1a3');
+            drawRect(845, 250, 10, 35, '#ffd1a3', 2);
+            
+            // Family members (appearing progressively)
+            if (t > 80) {
+                // Spouse
+                drawPerson(300, 340, 0.9, '#e91e63');
+            }
+            if (t > 120) {
+                // Child
+                drawPerson(480, 360, 0.7, '#9c27b0');
+            }
+            
+            // Property with success indicators
+            drawRect(150, 450, 900, 180, 'white', 15);
+            ctx.strokeStyle = '#27ae60';
+            ctx.lineWidth = 6;
+            ctx.strokeRect(150, 450, 900, 180);
+            
+            // Success metrics
+            drawText("✓ Smart Investment", 330, 500, 22, '#27ae60', 'center', 'bold');
+            drawText("✓ Zero Legal Issues", 600, 500, 22, '#27ae60', 'center', 'bold');
+            drawText("✓ Quality Assured", 870, 500, 22, '#27ae60', 'center', 'bold');
+            
+            // Value appreciation graph
+            ctx.strokeStyle = '#27ae60';
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            const graphProgress = Math.min(t / 250, 1);
+            for (let i = 0; i <= graphProgress * 100; i++) {
+                const x = 200 + i * 8;
+                const y = 600 - Math.pow(i / 10, 1.5);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+            
+            drawText("Property Value Growth", 600, 570, 20, '#2c3e50', 'center', 'bold');
+            drawText("↑ ROI", 950, 560, 24, '#27ae60', 'center', 'bold');
+        }
+
+        function renderScene12(t) {
+            // Background - professional
+            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Pulsing effect
+            const pulse = Math.sin(t / 30) * 20 + 350;
+            
+            // Company logo circle
+            drawCircle(canvas.width/2, 200, pulse * 0.3, 'rgba(255, 255, 255, 0.1)');
+            drawCircle(canvas.width/2, 200, 100, 'white');
+            drawText("🏠", canvas.width/2, 200, 60, '#667eea', 'center', 'normal');
+            
+            // Company name with animation
+            const nameY = 320 + Math.sin(t / 25) * 5;
+            drawText("RealtyWise", canvas.width/2, nameY, 56, 'white', 'center', 'bold');
+            drawText("Consultants", canvas.width/2, nameY + 50, 36, 'rgba(255,255,255,0.9)', 'center', 'normal');
+            
+            // Tagline
+            drawText("Your Investment, Our Expertise", canvas.width/2, 430, 28, 'rgba(255,255,255,0.95)', 'center', 'normal');
+            
+            // Contact details box
+            drawRect(300, 480, 600, 150, 'rgba(255, 255, 255, 0.95)', 15);
+            
+            drawText("📞 +91-98765-43210", canvas.width/2, 520, 24, '#2c3e50', 'center', 'bold');
+            drawText("🌐 www.realtywise.in", canvas.width/2, 560, 24, '#2c3e50', 'center', 'bold');
+            drawText("📧 hello@realtywise.in", canvas.width/2, 600, 24, '#2c3e50', 'center', 'bold');
+            
+            // CTA Button with pulse
+            const buttonPulse = Math.sin(t / 20) * 5;
+            drawRect(400 - buttonPulse, 640 - buttonPulse, 400 + buttonPulse * 2, 70 + buttonPulse * 2, '#f39c12', 35);
+            drawText("Book Free Consultation Today!", canvas.width/2, 675, 26, 'white', 'center', 'bold');
+        }
+
+        function animate() {
+            if (!isPaused) {
+                sceneTime++;
+            }
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Render current scene
+            if (currentScene < scenes.length) {
+                scenes[currentScene].render(sceneTime);
+                
+                // Update scene info
+                document.getElementById('sceneInfo').textContent = scenes[currentScene].name;
+                
+                // Move to next scene
+                if (sceneTime >= scenes[currentScene].duration) {
+                    currentScene++;
+                    sceneTime = 0;
+                    
+                    // Loop back to start
+                    if (currentScene >= scenes.length) {
+                        currentScene = 0;
+                    }
+                }
+            }
+            
+            animationId = requestAnimationFrame(animate);
+        }
+
+        function playAnimation() {
+            isPaused = false;
+            if (!animationId) {
+                animate();
+            }
+        }
+
+        function pauseAnimation() {
+            isPaused = true;
+        }
+
+        function restartAnimation() {
+            currentScene = 0;
+            sceneTime = 0;
+            isPaused = false;
+            if (!animationId) {
+                animate();
+            }
+        }
+
+        function skipScene() {
+            currentScene++;
+            sceneTime = 0;
+            if (currentScene >= scenes.length) {
+                currentScene = 0;
+            }
+        }
+
+        // Start animation automatically
+        animate();
+    </script>
+</body>
+</html>
